@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YONDE-FGX - オフライン完結型日本語ナレーション音声生成ソフト</title>
+    <link rel="icon" type="image/png" href="YONDE-FGX-ICON.png">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2b6cb0;
+            --accent: #2b6cb0;
+            --cta: #28a745;
+            --cta-sub: #1e7e34;
+            --vector-btn: #0066cc;
+            --text: #2d3748;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .header-logo {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+            display: inline-block;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+        header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        header .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: -30px auto 40px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        /* ヒーローセクション（2カラム化） */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+        .hero-screenshot {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 50px;
+            font-size: 1.8rem;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-top: 25px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            border-radius: 6px;
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .highlight-box {
+            background: #edf2f7;
+            border: 1px solid #cbd5e0;
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 6px;
+            margin: 25px 0;
+        }
+        .highlight-box h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 5px solid #e53e3e;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        .warning-box h4 {
+            color: #c53030;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        /* 画面ギャラリーセクション */
+        .gallery-section {
+            margin: 5rem 0;
+            text-align: center;
+        }
+        .gallery-section h2 {
+            border-bottom: none;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-sub {
+            color: #718096;
+            margin-bottom: 2.5rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .gallery-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .gallery-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .gallery-card .caption {
+            padding: 1.2rem;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .disclaimer-box {
+            background: #fffaf0;
+            border: 1px solid #feebc8;
+            border-left: 5px solid #dd6b20;
+            padding: 25px;
+            border-radius: 6px;
+            margin-top: 30px;
+            font-size: 0.95rem;
+        }
+        .disclaimer-box h3 {
+            color: #c05621;
+            margin-top: 0;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f4f7f6, #e9ecef);
+            border-radius: 8px;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            color: #fff;
+            padding: 15px 24px;
+            font-size: 1.05rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .btn-download {
+            background: var(--cta);
+        }
+        .btn-download:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        .btn-vector {
+            background: var(--vector-btn);
+        }
+        .btn-vector:hover {
+            background: #0052a3;
+            transform: translateY(-2px);
+        }
+        .download-note {
+            max-width: 780px;
+            margin: 20px auto 0 auto;
+            padding: 14px 18px;
+            background: #fff;
+            border: 1px solid #cbd5e0;
+            border-left: 4px solid var(--secondary);
+            border-radius: 6px;
+            text-align: left;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+        .spec-list {
+            list-style: none;
+            padding: 0;
+        }
+        .spec-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .spec-list strong {
+            display: inline-block;
+            width: 180px;
+            color: var(--primary);
+        }
+        .contact-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 20px 25px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 20px;
+                margin-top: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="YONDE-FGX-ICON.png" alt="YONDE-FGX アイコン" class="header-logo">
+        <h1>YONDE-FGX</h1>
+        <div class="subtitle">Your Offline Narration &amp; Dictation Engine（ローカル完結型日本語ナレーション生成）</div>
+        <div class="badge">シェアウェア（無料試用：5回まで / 1ライセンスPC3台まで） / 完全ローカル完結・ZIPポータブル</div>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. ヒーローセクション -->
+        <section class="hero">
+            <div>
+                <h2>YONDE-FGXとは？</h2>
+                <p><strong>YONDE-FGX（Your Offline Narration &amp; Dictation Engine）</strong>は、音声合成エンジンおよび音声モデルを活用し、社外秘の原稿や外部へ流出したくないテキストからも安全に日本語ナレーション音声ファイルを生成できる、完全ローカル完結型のデスクトップアプリケーションです。</p>
+                <p>テキスト解析から音声合成、WAV / MP3 ファイル出力まですべてお使いの PC 内で完結するため、入力した文章や音声データが外部のサーバーへ送信されることは一切ありません。インストーラーやレジストリを使用しないポータブル構成を採用しており、ZIP ファイルを解凍して <code>YONDE-FGX.exe</code> を起動するだけですぐにご利用いただけます。</p>
+            </div>
+            <div>
+                <img src="YONDE-FGX-Open.png" alt="YONDE-FGX メイン画面" class="hero-screenshot">
+            </div>
+        </section>
+
+        <h2>YONDE-FGXの主な特長</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>1. 完全ローカル完結による高い安全性</h3>
+                <p>読み上げ解析から音声合成、ファイル保存までをすべてローカル PC 内で処理します。未公開の企画書・マニュアル・社内教育資料など、外部クラウドへ送信したくない原稿でも安心してナレーション化できます。</p>
+            </div>
+            <div class="feature-card">
+                <h3>2. 用途に合わせたきめ細かな音声調整</h3>
+                <p>話者やスタイル（トーン）の選択に加え、<strong>発話速度・声の高さ・抑揚・音量</strong>をスライダーで直感的に調整可能。解説動画・社内アナウンス・教材など、用途に応じた聞き取りやすい音声を作成できます。</p>
+            </div>
+            <div class="feature-card">
+                <h3>3. <code>[wait:秒数]</code> タグによる自由な無音区間挿入</h3>
+                <p>テキスト内に <code>[wait:1.0]</code> のように定型タグを記述することで、任意の箇所に指定秒数の無音区間（間・ポーズ）を挿入できます。句読点だけでは調整しきれないナレーションの「間」を思い通りにコントロールできます。</p>
+            </div>
+            <div class="feature-card">
+                <h3>4. 長文にも対応する改行分割・連番ファイル生成</h3>
+                <p>複数行にわたる長い原稿も、<strong>改行単位で自動分割して連番ファイル（<code>_000</code>、<code>_001</code> …）として一括生成</strong>できます。動画編集ソフトへの取り込みやスライドごとの音声差し替え作業を大幅に効率化します。</p>
+            </div>
+            <div class="feature-card">
+                <h3>5. ユーザー辞書置換 ＆ その場で試聴再生</h3>
+                <p>固有名詞や専門用語の読み方を登録・置換できる辞書機能を備え、保存前に<strong>試聴再生</strong>でイントネーションや間をすぐ確認できます。再生・生成処理の途中中止にも対応しています。</p>
+            </div>
+            <div class="feature-card">
+                <h3>6. WAV / MP3 出力 ＆ レジストリ不使用のシンプル構成</h3>
+                <p>非圧縮の <strong>WAV</strong> と扱いやすい <strong>MP3</strong> の両形式での出力に対応。レジストリを使用せず ZIP 解凍のみで動作するため、環境を汚さず手軽に管理できます。</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>ナレーション制作をスムーズにする便利機能</h3>
+            <ul>
+                <li><strong>無音区間タグ:</strong> 原稿中の <code>[wait:1.0]</code> などの指定秒数に合わせてポーズを挿入し、聞き取りやすいリズムを作れます。</li>
+                <li><strong>改行分割・連番出力:</strong> 「改行でファイルを分割」にチェックを入れることで、原稿の行ごとに連番ファイルとして一括保存できます。</li>
+                <li><strong>ユーザー辞書＆試聴再生:</strong> 読み間違いしやすい語句を辞書で置換し、試聴再生で仕上がりを確かめてから WAV / MP3 に出力できます。</li>
+            </ul>
+        </div>
+
+        <!-- 2. 操作の流れ -->
+        <section class="gallery-section">
+            <h2>基本的な操作フロー</h2>
+            <p class="gallery-sub">原稿の入力と音声調整から、試聴再生、WAV / MP3 ファイル保存までのシンプルな流れ</p>
+            <div class="gallery-grid">
+                <div class="gallery-card">
+                    <img src="YONDE-FGX-Input.png" alt="話者選択とテキスト入力画面">
+                    <div class="caption">1. 話者・スタイルの選択と原稿入力（[wait:秒数] 対応）</div>
+                </div>
+                <div class="gallery-card">
+                    <img src="YONDE-FGX-Adjust.png" alt="音声パラメータ調整と試聴再生">
+                    <div class="caption">2. 速度・高さ・抑揚・音量の調整と試聴再生</div>
+                </div>
+                <div class="gallery-card">
+                    <img src="YONDE-FGX-Save.png" alt="WAV / MP3 保存・改行分割出力">
+                    <div class="caption">3. WAV / MP3 保存（改行分割による連番出力にも対応）</div>
+                </div>
+                <div class="gallery-card">
+                    <img src="YONDE-FGX-License.png" alt="ライセンス認証ダイアログ">
+                    <div class="caption">4. 「ライセンス登録」からの認証（PC 3台まで登録可能）</div>
+                </div>
+            </div>
+        </section>
+
+        <h2>📦 インストールおよびアンインストール方法</h2>
+
+        <h3>📥 インストール手順（ZIP ポータブル構成）</h3>
+        <p>本ソフトウェアはインストーラーおよびレジストリを使用しない ZIP 配布形式を採用しています。</p>
+        <ol>
+            <li>配布された ZIP ファイルを任意のフォルダへすべて展開（解凍）します。</li>
+            <li>展開されたフォルダ内の <strong><code>YONDE-FGX.exe</code></strong> をダブルクリックして起動します（必要に応じてデスクトップ等へショートカットを作成してください）。</li>
+        </ol>
+
+        <div class="warning-box">
+            <h4>⚠️ フォルダ配置・書き込み権限に関するご注意</h4>
+            <ul style="margin-bottom: 0;">
+                <li>ZIP 内の <code>YONDE-FGX.exe</code> と同梱の DLL・辞書・音声モデルフォルダ（<code>VoiceAssets</code> 等）は、<strong>必ず同じ階層構成のまま解凍</strong>してください。ファイル単体で別の場所へ移動すると正常に起動・音声合成ができなくなります。</li>
+                <li>設定ファイルや試用・ライセンス情報をアプリ配置フォルダ内に保存するため、デスクトップや <code>D:\Tools\YONDE-FGX</code> など書き込み可能なフォルダへ解凍するとそのまま手軽にご利用いただけます。</li>
+                <li><code>C:\Program Files</code> などの書き込み制限があるフォルダに配置する場合は、解凍したフォルダを右クリック ＞ <strong>「プロパティ」</strong> ＞ <strong>「セキュリティ」</strong> タブ ＞ <strong>「編集」</strong> から <strong><code>Users</code></strong> の <strong>「書き込み」を「許可」</strong> してください。</li>
+            </ul>
+        </div>
+
+        <h3>🗑️ アンインストール（削除）手順</h3>
+        <ol>
+            <li>実行中の <code>YONDE-FGX.exe</code> を終了します。</li>
+            <li>解凍したフォルダごと削除するだけでアンインストールは完了です（レジストリは使用していません）。</li>
+        </ol>
+
+        <h2>⚠️ ご利用の前の重要な注意事項</h2>
+        <div class="warning-box">
+            <h4>⚠️ SmartScreen（警告画面）および生成音声の利用規約について</h4>
+            <ul style="margin-bottom: 0;">
+                <li><strong>SmartScreen について:</strong> 初回起動時などに Windows のセキュリティ画面（SmartScreen 等）が表示される場合がありますが、<strong>「詳細情報」</strong> をクリックし、その後に表示される <strong>「実行」</strong> ボタンからご利用いただけます（音声合成・ファイル生成はローカル完結のため外部送信はありません）。</li>
+                <li><strong>生成音声の公開・商用利用時のクレジット表記:</strong> 作成した音声を動画・配信・コンテンツ等で公開または商用利用する際は、使用した音声モデル（キャラクター）ごとに定められた利用規約およびクレジット表記ルール（例: <code>VOICEVOX:四国めたん</code> 等）を必ず遵守してください。</li>
+            </ul>
+        </div>
+
+        <h2>動作環境</h2>
+        <ul class="spec-list">
+            <li><strong>対応OS:</strong> Windows 10 / Windows 11 (64bit)</li>
+            <li><strong>ランタイム:</strong> 不要（.NET 10 ランタイム同梱・自己完結型）</li>
+            <li><strong>インターネット:</strong> ライセンス認証時のみ必要（テキスト解析・音声合成・ファイル出力等の処理は完全ローカル完結）</li>
+        </ul>
+
+        <h2>試用制限とライセンスについて</h2>
+        <p>本ソフトウェアはシェアウェアです。インストール後、<strong>無料試用枠【5回】</strong>まで機能をお試しいただけます。</p>
+        <p>試用中または上限回数に達した後は、画面下部の <strong>「ライセンス登録」</strong> ボタンから「YONDE-FGX ライセンス認証」ダイアログを開き、お名前（または組織名）と正規ライセンスキー（<strong>1ライセンスにつき、同一所有者の PC 3台まで登録可能</strong>）を入力して認証することで、引き続き無制限にご利用いただけます。</p>
+
+        <!-- 免責事項 -->
+        <div class="disclaimer-box">
+            <h3>免責事項・注意事項</h3>
+            <p>1. <strong>音声合成の読み上げ精度について:</strong> 本ソフトウェアは音声合成エンジンおよび辞書による自動解析を行いますが、すべての漢字・固有名詞・記号の正確な読み上げを 100% 保証するものではありません。必要に応じて辞書機能やひらがな表記等で調整のうえご利用ください。</p>
+            <p>2. <strong>生成音声の権利および規約遵守について:</strong> 生成された音声ファイルを公開・配信・商用利用する際は、必ず使用した各音声モデル（キャラクター）の利用規約およびクレジット表記ルールを確認し、利用者の責任において遵守してください。規約違反等に起因するトラブルについて、制作者は一切の責任を負いません。</p>
+            <p>3. <strong>損害に対する責任の否定:</strong> 本ソフトウェアの使用、または使用不能から生じるいかなる損害（業務の中断、データの逸失、金銭的損害、その他の経済的損失等）についても、制作者は一切の責任を負わないものとします。</p>
+            <p>4. <strong>動作保証および個別サポート:</strong> 本ソフトウェアは「現状のまま（As-Is）」で提供されます。すべての PC 環境での動作を保証するものではなく、個別の問い合わせに対する動作保証や個別チューニングの義務を負いません。</p>
+            <p>5. <strong>禁止事項:</strong> 本ソフトウェアの無断転載・再配布・二次配布、およびリバースエンジニアリング（逆コンパイル・逆アセンブル等）を禁じます。</p>
+            <p style="margin-bottom: 0;">6. <strong>仕様変更:</strong> 本ソフトウェアの機能、仕様、および付属ドキュメントの内容は、予告なく変更される場合があります。</p>
+        </div>
+
+        <h2>著作権・ライセンス表記およびお問い合わせ</h2>
+        <div class="contact-box">
+            <p style="margin-bottom: 10px;">本ソフトウェアの著作権は <strong>Feature GateX</strong> に帰属します。使用されている各種音声合成エンジン・音声モデル・オープンソースライブラリの権利は各権利者に帰属します（詳細はアプリ内の規約・クレジット画面または同梱の <code>THIRD_PARTY_LICENSES.txt</code> をご確認ください）。</p>
+            <p style="margin-bottom: 0;"><strong>開発・制作者:</strong> Feature GateX ／ <strong>連絡先メール:</strong> <a href="mailto:featuregatex@gmail.com">featuregatex@gmail.com</a></p>
+        </div>
+
+        <div class="cta-section">
+            <h3>今すぐ YONDE-FGX (v1.0.0) を試す / 購入する</h3>
+            <p>まずは無料試用版（5回まで）で、ローカル完結の日本語ナレーション生成をお試しください。</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/roseGarden2500/YONDE-FGX_LP/releases/download/v1.0.0/YONDE-FGX.zip" class="btn btn-download">YONDE-FGX ダウンロード (.zip)</a>
+                <a href="#" class="btn btn-vector">ライセンスをVectorで購入（準備中）</a>
+            </div>
+            <div class="download-note">
+                <strong>※ ダウンロード・ご利用時のご注意：</strong>
+                ZIP ファイルを解凍する際は、<code>YONDE-FGX.exe</code> と同梱フォルダ（<code>VoiceAssets</code> 等）の階層構造を崩さずすべて展開してください。また、生成音声を公開・商用利用する際は、使用した音声モデルの利用規約およびクレジット表記ルールをご確認ください。
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Feature GateX. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
